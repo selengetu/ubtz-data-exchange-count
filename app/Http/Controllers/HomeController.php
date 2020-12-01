@@ -29,7 +29,7 @@ class HomeController extends Controller {
         }
         
         if ($type!=NULL && $type !=0) {
-            $query.=" and type_id = '".$type."'";
+            $query.=" and const_herd.type_id = '".$type."'";
     
         }
         else
@@ -44,7 +44,7 @@ class HomeController extends Controller {
             Session::put('owner', $owner);
         }
         if ($owner!=NULL && $owner !=0) {
-            $query.=" and owner_id = '".$owner."'";
+            $query.=" and const_herd.owner_id = '".$owner."'";
     
         }
         else
