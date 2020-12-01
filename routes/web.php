@@ -32,6 +32,25 @@ Route::get('/getcountherd/{id?}',function($id = 0){
     ->where('count_id','=',$id)->get();
     return $dt;
 });
+
+Route::get('/type', 'TypeController@index')->name('type');
+Route::get('/type/delete/{id}', 'TypeController@destroy');
+Route::post('/addtype','TypeController@store');
+Route::post('/updatetype','TypeController@update');
+Route::get('/typefill/{id?}',function($id = 0){
+    $dt=App\Type::where('type_id','=',$id)->get();
+    return $dt;
+});
+
+Route::get('/owner', 'OwnerController@index')->name('owner');
+Route::get('/owner/delete/{id}', 'OwnerController@destroy');
+Route::post('/addowner','OwnerController@store');
+Route::post('/updateowner','OwnerController@update');
+Route::get('/ownerfill/{id?}',function($id = 0){
+    $dt=App\Owner::where('owner_id','=',$id)->get();
+    return $dt;
+});
+
 Route::post('/updatecount', 'HomeController@updatecount')->name('updatecount');	
 Route::get('/count', 'HomeController@count')->name('count');
 Route::get('/herd/{herd}/delete', ['as' => 'herd.delete', 'uses' => 'HomeController@del']);

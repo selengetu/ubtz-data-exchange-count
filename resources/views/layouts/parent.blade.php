@@ -119,6 +119,12 @@
                 
                         <li> <a class="waves-effect waves-dark" href="{{ route('count') }}" aria-expanded="false"><i class="fa fa-calendar-plus-o"></i><span class="hide-menu">Тооллого</span></a>
                         </li>
+                        
+                        <li> <a class="waves-effect waves-dark" href="{{ route('owner') }}" aria-expanded="false"><i class="fa fa-user-circle"></i><span class="hide-menu">Эзэмшигч</span></a>
+                        </li>
+                        
+                        <li> <a class="waves-effect waves-dark" href="{{ route('type') }}" aria-expanded="false"><i class="fa fa-bar-chart"></i><span class="hide-menu">Төрөл</span></a>
+                        </li>
                     </ul>
                   
                 </nav>
