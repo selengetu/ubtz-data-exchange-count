@@ -1,0 +1,1 @@
+CREATE USER 'herdadmin'@'%' IDENTIFIED BY '123456@Herd654321!';
