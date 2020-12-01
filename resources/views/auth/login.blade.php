@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 register-sec">
-                <h2 class="text-center"> Адуу бүртгэл</h2>
+                <h2 class="text-center"> Бүртгэл</h2>
                 <form method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
                     <div class="form-group">
