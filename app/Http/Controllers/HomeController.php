@@ -268,13 +268,16 @@ WHERE
 public function createcount(Request $request) {
 
     $herd_id = DB::select("SELECT herd_id FROM CONST_HERD");
-    foreach($herd_id as $key) {
-        $herd = new Count;
-        $herd->count_year = $request->herd_year;
-        $herd->herd_id = $key->herd_id; 
-        $herd->save();
+    $year = DB::table('count_herd')->where('count_year', $request->herd_year)->doesntExist();
+    if($year == true){
+        foreach($herd_id as $key) {
+            $herd = new Count;
+            $herd->count_year = $request->herd_year;
+            $herd->herd_id = $key->herd_id; 
+            $herd->save();
+        }
     }
-    return direct('count');
+    return back();
 
 }
 public function filter_countyear($year) {

@@ -157,7 +157,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form>
+        <form action="createcount" method="post">
         <div class="modal-body">
             {{ csrf_field() }}
                 <div class="form-row">
