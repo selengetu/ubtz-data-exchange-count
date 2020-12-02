@@ -105,6 +105,18 @@
             <div class="card">
                 <div class="card-body">
                   <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="count_year">Тооллогын жил</label>
+                        <select class="form-control" id="count_year" name="count_year" onchange="javascript:location.href = 'filter_countyear/'+this.value;">
+                         
+                          @foreach ($years as $i=>$item)                     
+                          <option value="{{ $item->year_id }}" @if($item->year_id==$year) selected @endif>{{ $item->year_name }}</option>
+                          @endforeach
+                        </select>
+                      </div>
+                   
+                </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="count_year">Төрөл</label>
@@ -143,8 +155,7 @@
                                     <th>Гүү</th>
                                     <th>Эзэмшигч</th>
                                     <th>Зураг </th>
-                                    <th>2019 </th>
-                                    <th>2020 </th>
+                                    <th>Бүртгэлтэй эсэх </th>
                                     <th>Тайлбар </th>
                                     <th> </th>
                                 </tr>
@@ -164,20 +175,9 @@
                         
                         @endif
                       </td>
-                      <td>  
-                        @if($h->c1 == 1)
-                        
-                        <img src="{{asset('img/correct.jpg')}}" style="height:30px"   >
-                      
-                      @else
-                        <img src="{{asset('img/wr.png')}}" style="height:30px" >
-                      
-                      @endif
-                    </td>
-                      
-                      
+          
                         <td>
-                          @if($h->c2 == 1)
+                          @if($h->is_enable == 1)
                           
                           <img src="{{asset('img/correct.jpg')}}" style="height:30px"  >
                         
