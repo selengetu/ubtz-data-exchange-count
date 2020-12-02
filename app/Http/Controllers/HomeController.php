@@ -55,7 +55,7 @@ class HomeController extends Controller {
         $herd=DB::select("SELECT * FROM CONST_HERD");
         $types=DB::select("SELECT * FROM CONST_TYPE");
         $owners=DB::select("SELECT * FROM CONST_OWNER");
-        $herds=DB::select("  SELECT 
+        $herds=DB::select(" select * from (SELECT 
         `const_herd`.`herd_id` AS `herd_id`,
         `const_herd`.`type_id` AS `type_id`,
         `const_herd`.`owner_id` AS `owner_id`,
@@ -63,11 +63,14 @@ class HomeController extends Controller {
         `const_herd`.`img_url` AS `img_url`,
         `const_herd`.`parent_id` AS `parent_id`,
         `const_herd`.`age` AS `age`,
+        `const_herd`.`comment` AS `comment`,
         `const_herd`.`herd_name` AS `herd_name`,
         `const_owner`.`owner_name` AS `owner_name`,
         `const_type`.`type_name` AS `type_name`,
         `h`.`herd_name` AS `parent_name`,
         `m`.`herd_name` AS `mother_name`
+        
+       
     FROM
         ((((`const_herd`
         JOIN `const_owner`)
@@ -78,7 +81,16 @@ class HomeController extends Controller {
         ((`const_herd`.`owner_id` = `const_owner`.`owner_id`)
             AND (`const_type`.`type_id` = `const_herd`.`type_id`)
             AND (`const_herd`.`parent_id` = `h`.`herd_id`)
-            AND (`const_herd`.`mother_id` = `m`.`herd_id`)) " .$query. "");
+            AND (`const_herd`.`mother_id` = `m`.`herd_id`) " .$query. "
+          
+            )) q2
+            
+                JOIN (select herd_id ,
+sum(case when is_enable=1 and count_year=2020 Then 1 ELSE 0 END) as c2,
+sum(case when is_enable=1 and count_year=2019 Then 1 ELSE 0 END) as c1
+from count_herd
+group by herd_id) q
+where q.herd_id=q2.herd_id");
         return view('herd',compact('herds','herd','type','owner','types','owners'));
    
     }
@@ -90,6 +102,7 @@ class HomeController extends Controller {
         $herd->mother_id = $request->mother_id; 
         $herd->owner_id = $request->owner_id;
         $herd->parent_id = $request->parent_id;
+        $herd->comment = $request->comment;
         $herd->save();
         $id=DB::getPdo()->lastInsertId();
 
@@ -107,7 +120,7 @@ class HomeController extends Controller {
     public function update(Request $request)
     {
         Herd::where('herd_id', $request->herd_id)
-            ->update(['herd_name' => $request->herd_name,'mother_id' => $request->mother_id,'type_id' => $request->type_id,'owner_id' => $request->owner_id,'parent_id' => $request->parent_id]);
+            ->update(['herd_name' => $request->herd_name,'comment' => $request->comment,'type_id' => $request->type_id,'owner_id' => $request->owner_id,'parent_id' => $request->parent_id]);
             if ($request->hasFile('img_url')){
                 $file = $request->file('img_url');
                 $extension = $file->getClientOriginalExtension(); // you can also use file name
@@ -267,12 +280,13 @@ WHERE
 }
 public function createcount(Request $request) {
 
-    $herd_id = DB::select("SELECT herd_id FROM CONST_HERD");
+    $herd_id = DB::select("SELECT herd_id FROM CONST_HERD where is_enable=1");
     $year = DB::table('count_herd')->where('count_year', $request->herd_year)->doesntExist();
     if($year == true){
         foreach($herd_id as $key) {
             $herd = new Count;
             $herd->count_year = $request->herd_year;
+            $herd->is_enable = 1;
             $herd->herd_id = $key->herd_id; 
             $herd->save();
         }
@@ -294,6 +308,13 @@ public function filter_type($type) {
 }
 public function updatecount(Request $request)
     {
+        
+       $db = DB::table('COUNT_HERD')->where('count_id', $request->count_id)->select('count_year', 'herd_id')->get(0);       
+       $year = DB::table('COUNT_HERD')->max('count_year');
+       if($db[0]->count_year == $year ){
+        DB::table('CONST_HERD')->where('herd_id', $db[0]->herd_id)
+        ->update(['is_enable' => $request->is_enable,'comment' => $request->comment]);
+       }
         DB::table('COUNT_HERD')->where('count_id', $request->count_id)
             ->update(['is_enable' => $request->is_enable,'comment' => $request->comment]);
             

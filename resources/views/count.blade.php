@@ -74,7 +74,9 @@
                                       @endif
                                     </td>
                                   
-                                  <td>@if($h->is_enable == 1)
+                                  <td>
+                                    @if($h->is_enable == 1)
+                                    
                                     <img src="{{asset('img/correct.jpg')}}" style="height:30px"   onclick="getcount({{$h->count_id}})">
                                   
                                   @else

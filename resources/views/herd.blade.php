@@ -143,6 +143,9 @@
                                     <th>Гүү</th>
                                     <th>Эзэмшигч</th>
                                     <th>Зураг </th>
+                                    <th>2019 </th>
+                                    <th>2020 </th>
+                                    <th>Тайлбар </th>
                                     <th> </th>
                                 </tr>
                             </thead>
@@ -161,6 +164,30 @@
                         
                         @endif
                       </td>
+                      <td>  
+                        @if($h->c1 == 1)
+                        
+                        <img src="{{asset('img/correct.jpg')}}" style="height:30px"   >
+                      
+                      @else
+                        <img src="{{asset('img/wr.png')}}" style="height:30px" >
+                      
+                      @endif
+                    </td>
+                      
+                      
+                        <td>
+                          @if($h->c2 == 1)
+                          
+                          <img src="{{asset('img/correct.jpg')}}" style="height:30px"  >
+                        
+                        @else
+                          <img src="{{asset('img/wr.png')}}" style="height:30px" >
+                        
+                        @endif
+                    
+                    </td>
+                    <td>{{$h->comment}}</td>
                       <td> <button type="button" class="btn btn-warning btn-sm updateherd" data-toggle="modal"  data-id="{{$h->herd_id}}" tag="{{$h->herd_id}}"  data-target="#exampleModal">
            
                         <i class="fa fa-pencil" style="color: rgb(255, 255, 255);"></i>
@@ -248,7 +275,10 @@
                     <label for="inputCity">Зураг</label>
                     <input type="file" class="form-control-file" id="img_url" name="img_url">
                   </div>
-               
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword4">Тайлбар</label> 
+                    <input type="text" class="form-control" id="comment" name="comment" placeholder="">
+                  </div>
                 </div>
              
         </div>
@@ -262,7 +292,7 @@
   </div>
 
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Адууны зураг</h5>
@@ -271,7 +301,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <img class="modal-content" id="img01" height="300px">
+          
+          <img class="modal-content" id="img01" height="300px" class="center">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">хаах</button>
@@ -308,6 +339,7 @@ $('.updateherd').on('click',function(){
                 $('#mother_id').val(qwe.mother_id);
                 $('#herd_id').val(qwe.herd_id);
                 $('#herd_name').val(qwe.herd_name);
+                $('#comment').val(qwe.comment);
                  $('#owner_id').val(qwe.owner_id).trigger('change');
                  $('#parent_id').val(qwe.parent_id).trigger('change');
 
