@@ -75,7 +75,7 @@ class HomeController extends Controller {
         $years=DB::select("SELECT * FROM CONST_YEAR");
         $herds=DB::select("select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_name as mother_name , t.type_name
         from count_herd c, const_herd h, const_owner o, const_herd p ,const_herd m, const_type t
-        where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id " .$query. "");
+        where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id and h.is_delete=0 " .$query. "");
         return view('herd',compact('herds','herd','type','owner','types','owners','year', 'years'));
    
     }
@@ -126,7 +126,9 @@ class HomeController extends Controller {
             return Redirect('home');
     }
     public function del($mid) {
-        DB::delete("delete from Const_herd where herd_id=$mid");
+  
+        DB::table('const_herd')->where('herd_id', $mid)
+        ->update(['is_delete' => 1]);
         return Redirect('home');  
   }
  
@@ -152,7 +154,7 @@ class HomeController extends Controller {
     $uid=Auth::id();
     $herds=DB::select(" select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_name as mother_name , t.type_name
     from count_herd c, const_herd h, const_owner o, const_herd p ,const_herd m, const_type t
-    where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id " .$query. "");
+    where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id " .$query. " and h.is_delete=0");
     $years=DB::select("SELECT * FROM CONST_YEAR");
     $rep=DB::select("SELECT owner_name, SUM(CASE WHEN (type_id=1) THEN 1 ELSE 0 END) AS type_id1, 
     SUM(CASE WHEN (type_id=2) THEN 1 ELSE 0 END) AS type_id2, 
