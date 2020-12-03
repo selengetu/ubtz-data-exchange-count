@@ -354,7 +354,7 @@
 $(document).ready(function() {
     
     var table = $('#example').DataTable( {
-      
+      "pageLength": 50
     } );
 } );
 function getimg($id){

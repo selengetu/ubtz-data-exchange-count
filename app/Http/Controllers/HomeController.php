@@ -73,7 +73,7 @@ class HomeController extends Controller {
         $types=DB::select("SELECT * FROM CONST_TYPE");
         $owners=DB::select("SELECT * FROM CONST_OWNER");
         $years=DB::select("SELECT * FROM CONST_YEAR");
-        $herds=DB::select("select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_id as mother_name , t.type_name
+        $herds=DB::select("select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_name as mother_name , t.type_name
         from count_herd c, const_herd h, const_owner o, const_herd p ,const_herd m, const_type t
         where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id " .$query. "");
         return view('herd',compact('herds','herd','type','owner','types','owners','year', 'years'));
@@ -150,7 +150,7 @@ class HomeController extends Controller {
         $query.=" ";
     }
     $uid=Auth::id();
-    $herds=DB::select(" select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_id as mother_name , t.type_name
+    $herds=DB::select(" select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_name as mother_name , t.type_name
     from count_herd c, const_herd h, const_owner o, const_herd p ,const_herd m, const_type t
     where c.herd_id=h.herd_id and h.owner_id=o.owner_id and p.herd_id=h.parent_id and m.herd_id=h.mother_id and t.type_id=h.type_id " .$query. "");
     $years=DB::select("SELECT * FROM CONST_YEAR");
