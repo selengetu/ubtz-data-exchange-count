@@ -32,7 +32,10 @@ Route::get('/getcountherd/{id?}',function($id = 0){
     ->where('count_id','=',$id)->get();
     return $dt;
 });
-
+Route::get('/gethistory/{id?}',function($id = 0){
+    $dt=DB::table('COUNT_HERD')->where('herd_id','=',$id)->get();
+    return $dt;
+});
 Route::get('/type', 'TypeController@index')->name('type');
 Route::get('/type/delete/{id}', 'TypeController@destroy');
 Route::post('/addtype','TypeController@store');

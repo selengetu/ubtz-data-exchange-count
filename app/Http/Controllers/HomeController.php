@@ -100,6 +100,13 @@ class HomeController extends Controller {
             DB::table('const_herd')->where('herd_id',$id)
             ->update(['img_url' => $fileName]);
         }
+      
+            $herd = new Count;
+            $herd->count_year = $request->herd_year;
+            $herd->is_enable = 1;
+            $herd->herd_id = $id; 
+            $herd->save();
+   
         return Redirect('');
     }
     public function update(Request $request)

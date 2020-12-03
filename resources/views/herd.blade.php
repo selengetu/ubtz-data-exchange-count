@@ -166,7 +166,7 @@
                   <tr>
                       <td>{{$no}}</td>
                       <td>{{$h->type_name}}</td>
-                      <td>{{$h->herd_name}}</td>
+                      <td><a data-toggle="modal" data-target="#historymodal" onclick="gethistory({{$h->herd_id}})"><u> {{$h->herd_name}} </u></a></td>
                       <td>{{$h->parent_name}}</td>
                       <td>{{$h->mother_name}}</td>
                       <td>{{$h->owner_name}}</td>
@@ -276,8 +276,13 @@
                     <input type="file" class="form-control-file" id="img_url" name="img_url">
                   </div>
                   <div class="form-group col-md-6">
-                    <label for="inputPassword4">Тайлбар</label> 
-                    <input type="text" class="form-control" id="comment" name="comment" placeholder="">
+                    <label for="inputPassword4">Тоолох жил</label> 
+                    <select class="form-control" id="herd_year" name="herd_year">
+                         
+                      @foreach ($years as $i=>$item)                     
+                      <option value="{{ $item->year_id }}" @if($item->year_id==$year) selected @endif>{{ $item->year_name }}</option>
+                      @endforeach
+                    </select>
                   </div>
                 </div>
              
@@ -290,7 +295,38 @@
       </div>
     </div>
   </div>
-
+  <div class="modal fade" id="historymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Тооллогын түүх</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered vm" id="history"
+          style="font-size:10px; color:black; word-wrap:break-word;">
+          <thead style="background-color:#ceedf9; font-size: 10px;">
+              <tr>
+                 
+                  <th>Тооллогот жил</th>
+                  <th>Бүртгэлтэй эсэх </th>
+                  <th>Тайлбар </th>
+                  <th> </th>
+              </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Хаах</button>
+      
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
@@ -326,7 +362,28 @@ function getimg($id){
   $('#myModal').modal('show'); 
   $('#img01').attr('src','/img/'+$id+'');
 }
+function gethistory($id){
+  $.get('gethistory/'+$id,function(data){
+                $("#history tbody").empty();
+                $.each(data,function(i,qwe){
+                  if(qwe.is_enable == 1){
+                    $img= '{{asset('img/correct.jpg')}}';
+                }
+                else{
+                    $img= '{{asset('img/wr.jpg')}}';
+                }
+                    var sHtml = " <tr class='table-row' >" +
 
+                        "   <td class='m1'>"+ qwe.count_year +"</td>" +
+                        "   <td class='m1'>   <img src="+$img+" style='height:30px')'></td>" +
+                        "   <td class='m1'> "+ qwe.comment + "</td>" +
+                        "</tr>";
+                    $("#history tbody").append(sHtml);
+                });
+
+            });
+  
+}
 $('.updateherd').on('click',function(){
   var title = document.getElementById("exampleModalLabel");
         title.innerHTML = "Адууны мэдээлэл засварлах";
