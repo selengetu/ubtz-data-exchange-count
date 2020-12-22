@@ -56,7 +56,7 @@ Route::get('/ownerfill/{id?}',function($id = 0){
 
 Route::post('/updatecount', 'HomeController@updatecount')->name('updatecount');	
 Route::get('/count', 'HomeController@count')->name('count');
-Route::get('/herd/{herd}/delete', ['as' => 'herd.delete', 'uses' => 'HomeController@del']);
+Route::post('/deleteherd', 'HomeController@deleteherd')->name('deleteherd');	
 Route::get('/filter_countyear/{date}', 'HomeController@filter_countyear');
 Route::get('/filter_type/{date}', 'HomeController@filter_type');
 Route::get('/filter_owner/{date}', 'HomeController@filter_owner');

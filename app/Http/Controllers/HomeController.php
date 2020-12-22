@@ -125,10 +125,12 @@ class HomeController extends Controller {
         
             return Redirect('home');
     }
-    public function del($mid) {
+    public function deleteherd(Request $request) {
   
-        DB::table('const_herd')->where('herd_id', $mid)
-        ->update(['is_delete' => 1]);
+        DB::table('const_herd')->where('herd_id', $request->herds_id)
+        ->update(['is_delete' => 1, 'delete_year' => $request->delete_date, 'delete_reason' => $request->delete_reason]);
+        DB::table('count_herd')->where('herd_id', $request->herds_id)->where('count_year', $request->delete_date)
+        ->update(['is_enable' => 0, 'comment' => $request->delete_reason]);
         return Redirect('home');  
   }
  

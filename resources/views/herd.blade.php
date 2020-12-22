@@ -192,7 +192,7 @@
            
                         <i class="fa fa-pencil" style="color: rgb(255, 255, 255);"></i>
                     </button>
-                    <a href="{{ route('herd.delete', $h->herd_id) }}" class="btn btn-danger delete btn-sm" id="deleteproj" onclick="return confirm('Энэ мэдээллийг устгах уу?')">  <i class="fa fa-trash" style="color: rgb(255, 255, 255);"></i></a></td>
+                    <a class="btn btn-danger deleteherd btn-sm" id="deleteherd"  tag="{{$h->herd_id}}" >  <i class="fa fa-trash" style="color: rgb(255, 255, 255);"></i></a></td>
 
 
                   </tr>
@@ -347,6 +347,44 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="deleteModal"  role="dialog" aria-labelledby="countModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Бүртгэл устгах</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="deleteherd" method="post"  enctype="multipart/form-data" id="formherd">
+        <div class="modal-body">
+            {{ csrf_field() }}
+             
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="inputEmail4">Тайлбар</label>
+            <input type="text" class="form-control" id="delete_reason" name="delete_reason" placeholder="">
+          </div>
+      
+</div>
+<div class="form-row">
+  <div class="form-group col-md-12">
+    <label for="inputEmail4">Хасах жил</label>
+    <input type="text" class="form-control" id="delete_date" name="delete_date" placeholder="">
+    <input type="hidden" class="form-control" id="herds_id" name="herds_id" placeholder="">
+  </div>
+
+</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">хаах</button>
+          <button type="submit" class="btn btn-primary">хадгалах</button>
+        </div>
+      </form>
+      </div>
+    </div>
+    <div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -405,19 +443,11 @@ $('.updateherd').on('click',function(){
           });
     
         });
-        function deleteherd(id) {
-
-if (confirm('Энэ мэдээллийг устгах уу?')) {
-        $.get('delherd/' + id, function (data) {
-            if (data == 1) {
-                toastr.success('Амжилттай устгагдлаа!')
-                location.reload();
-            } else {
-                toastr.success('Амжилтгүй!')
-            }
-        })
-    }
-}
+        $('.deleteherd').on('click',function(){
+          $('#deleteModal').modal('show');
+          var itag=$(this).attr('tag');
+          $('#herds_id').val(itag);
+});
 </script>
 
 @endsection
