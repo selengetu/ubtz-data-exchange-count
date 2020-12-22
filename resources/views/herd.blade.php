@@ -171,7 +171,7 @@
                       <td>{{$h->mother_name}}</td>
                       <td>{{$h->owner_name}}</td>
                       <td> @if($h->img_url !=NULL)
-                        <img src="{{asset('img/').'/'.$h->img_url}}" style="height:30px"  onclick="getimg('{{$h->img_url}}')">
+                        <img src="{{asset('img/').'/'.$h->img_url}}" style="height:30px"  onclick="getimg('{{$h->herd_id}}')">
                         
                         @endif
                       </td>
@@ -227,7 +227,7 @@
                   <td>{{$h->mother_name}}</td>
                   <td>{{$h->owner_name}}</td>
                   <td> @if($h->img_url !=NULL)
-                    <img src="{{asset('img/').'/'.$h->img_url}}" style="height:30px"  onclick="getimg('{{$h->img_url}}')">
+                    <img src="{{asset('img/').'/'.$h->img_url}}" style="height:30px"  onclick="getimg({{$h->img_url}})">
                     
                     @endif
                   </td>
@@ -315,9 +315,14 @@
                 {{ csrf_field() }}
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <label for="inputCity">Зураг</label>
+                    <label for="inputCity">Намрын зураг</label>
                     <input type="file" class="form-control-file" id="img_url" name="img_url">
                   </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputCity">Хаврын зураг</label>
+                      <input type="file" class="form-control-file" id="img_url_2" name="img_url_2">
+                    </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Тоолох жил</label> 
                     <select class="form-control" id="herd_year" name="herd_year">
@@ -382,6 +387,8 @@
         <div class="modal-body">
           
           <img class="modal-content" id="img01" height="300px" class="center">
+          <br>
+          <img class="modal-content" id="img02" height="300px" class="center">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">хаах</button>
@@ -439,9 +446,15 @@ $(document).ready(function() {
     } );
 } );
 function getimg($id){
-  console.log($id);
   $('#myModal').modal('show'); 
-  $('#img01').attr('src','/img/'+$id+'');
+  $.get('getherd/'+$id,function(data){
+       
+             $.each(data,function(i,qwe){
+              $('#img01').attr('src','/img/'+qwe.img_url+'');
+              $('#img02').attr('src','/img/'+qwe.img_url_2+'');
+         });
+        });
+ 
 }
 function gethistory($id){
   $.get('gethistory/'+$id,function(data){
