@@ -318,7 +318,7 @@
                     <label for="inputCity">Намрын зураг</label>
                     <input type="file" class="form-control-file" id="img_url" name="img_url">
                   </div>
-                  <div class="form-row">
+                
                     <div class="form-group col-md-6">
                       <label for="inputCity">Хаврын зураг</label>
                       <input type="file" class="form-control-file" id="img_url_2" name="img_url_2">
