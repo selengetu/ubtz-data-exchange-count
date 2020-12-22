@@ -200,6 +200,49 @@
                   @endforeach
                             </tbody>
                         </table>
+
+                        <h3 class="text-themecolor">Хасагдсан адуу</h3><br>
+                        <table class="table table-bordered vm" id="deleteherds"
+                        style="font-size:10px; color:black; word-wrap:break-word;">
+                        <thead style="background-color:#ceedf9; font-size: 10px;">
+                            <tr>
+                                <th>№</th>
+                                <th>Адууны төрөл</th>
+                                <th>Нэр</th>
+                                <th>Эцэг</th>
+                                <th>Гүү</th>
+                                <th>Эзэмшигч</th>
+                                <th>Зураг </th>
+                                <th>Тайлбар </th>                           
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <?php $no = 1; ?>
+              @foreach($del as $h)
+              <tr>
+                  <td>{{$no}}</td>
+                  <td>{{$h->type_name}}</td>
+                  <td><a data-toggle="modal" data-target="#historymodal" onclick="gethistory({{$h->herd_id}})"><u> {{$h->herd_name}} </u></a></td>
+                  <td>{{$h->parent_name}}</td>
+                  <td>{{$h->mother_name}}</td>
+                  <td>{{$h->owner_name}}</td>
+                  <td> @if($h->img_url !=NULL)
+                    <img src="{{asset('img/').'/'.$h->img_url}}" style="height:30px"  onclick="getimg('{{$h->img_url}}')">
+                    
+                    @endif
+                  </td>
+      
+               
+                <td>{{$h->comment}}</td>
+                 
+
+              </tr>
+              <?php $no++; ?>
+              @endforeach
+                        </tbody>
+                    </table>
+                        <br><br>
+
                       </div>
                     </div>
                 </div>
