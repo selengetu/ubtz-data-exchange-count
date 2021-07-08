@@ -159,6 +159,7 @@ class HomeController extends Controller {
         $query.=" ";
     }
     $uid=Auth::id();
+    $years=DB::select("SELECT * FROM CONST_YEAR");
     $herds=DB::select(" select h.*, c.*, o.owner_name, p.herd_name as parent_name , m.herd_name as mother_name , t.type_name
     from count_herd c, const_herd h, const_owner o, const_herd p ,const_herd m, const_type t
     where c.herd_id=h.herd_id and h.owner_id=o.owner_id and
