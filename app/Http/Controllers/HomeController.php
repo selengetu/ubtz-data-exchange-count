@@ -105,7 +105,15 @@ class HomeController extends Controller {
             DB::table('const_herd')->where('herd_id',$id)
             ->update(['img_url' => $fileName]);
         }
-      
+        if ($request->hasFile('img_url_2')){
+            $file = $request->file('img_url_2');
+            $extension = $file->getClientOriginalExtension(); // you can also use file name
+            $fileName = time().'.'.$extension;
+            $path = public_path().'/img';
+            $uplaod = $file->move($path,$fileName);
+            DB::table('const_herd')->where('herd_id',$id)
+            ->update(['img_url_2' => $fileName]);
+        }
             $herd = new Count;
             $herd->count_year = $request->herd_year;
             $herd->is_enable = 1;
@@ -127,7 +135,15 @@ class HomeController extends Controller {
                 DB::table('const_herd')->where('herd_id',$request->herd_id)
                 ->update(['img_url' => $fileName]);
             }
-        
+            if ($request->hasFile('img_url_2')){
+                $file = $request->file('img_url_2');
+                $extension = $file->getClientOriginalExtension(); // you can also use file name
+                $fileName = time().'.'.$extension;
+                $path = public_path().'/img';
+                $uplaod = $file->move($path,$fileName);
+                DB::table('const_herd')->where('herd_id',$request->herd_id)
+                ->update(['img_url_2' => $fileName]);
+            }
             return Redirect('home');
     }
     public function deleteherd(Request $request) {
