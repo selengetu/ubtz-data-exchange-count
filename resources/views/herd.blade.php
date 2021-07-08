@@ -451,12 +451,11 @@ function getimg($id){
     $('#img01').attr('src','');
     $('#img02').attr('src','');
              $.each(data,function(i,qwe){
-              if(qwe.img_url =! null){
+             
               $('#img01').attr('src','/img/'+qwe.img_url+'');
-            }
-              if(qwe.img_url_2 =! null){
+            
                 $('#img02').attr('src','/img/'+qwe.img_url_2+'');
-              }
+             
             
          });
         });
