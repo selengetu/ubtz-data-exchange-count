@@ -12,9 +12,13 @@
                 {{ csrf_field() }}
                     <div class="form-group">
                         <label for="exampleInputName1" class="text-uppercase">НЭВТРЭХ НЭР</label>
-                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
-                            name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                        <input id="login" type="text"  class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}"
+                        name="login"  value="{{ old('username') ?: old('email') }}" required autocomplete="email" autofocus>
+                            @if ($errors->has('username') || $errors->has('email'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
+                            </span>
+                        @endif
                        
                     </div>
                     <div class="form-group">
